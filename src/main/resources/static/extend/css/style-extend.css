@@ -93,9 +93,9 @@ input[type=checkbox], input[type=radio] {
 {
 	padding: 4px 9px;
     border-radius: 20px;
-    height: : 30px;
+    height:30px;
     width: 37px;
-   /* border: 2px solid #ccc;*/
+   
     float: left;
     margin: 10px;
 }
@@ -1143,7 +1143,7 @@ overflow-y: scroll;
 h5> i
 {
   float: right;
-  width: 20px
+  width: 20px;
   background:rgba(0,0,0,0.5);
   padding: 7px;
 }
