@@ -304,7 +304,7 @@ select>.form-control {
 	margin-top: 41px;
 	left: 00px;
 	position: relative;
-	width: 100%%;
+	width: 100%;
 }
 
 .maincontent {
@@ -1353,7 +1353,7 @@ button:focus {
 
 h5>i {
 	float: right;
-	width: 20px background:rgba(0, 0, 0, 0.5);
+	width: 20px ;background:rgba(0, 0, 0, 0.5);
 	padding: 7px;
 }
 
@@ -1906,8 +1906,8 @@ input[type=checkbox]:checked:before {
 	width: 90%;
 	font-size: 16px;
 	font-weight: 100;
-	color: #929292; /
-	background-color: #f6f8f8; /
+	color: #929292; 
+	background-color: #f6f8f8; 
 	background-clip: padding-box;
 	border-top: none;
 	border-left: none;
@@ -2734,3 +2734,59 @@ input[type=checkbox] {
 .color_greentxt {
 	color: #008f00;
 }
+/* 29/12/2020 */
+.panel-heading {
+padding: 0;
+border:0;
+}
+.panel-title>a, .panel-title>a:active{
+display:block;
+padding:15px 0px;
+color:#555;
+font-size:16px;
+font-weight:100;
+/*text-transform:uppercase;*/
+letter-spacing:1px;
+word-spacing:3px;
+text-decoration:none;
+border-bottom:1px solid #ccc;
+}
+.panel-heading a:before {
+font-family: 'themify';
+content: "\e64b";
+float: right;
+transition: all 0.5s;
+}
+.panel-heading.active a:before {
+-webkit-transform: rotate(180deg);
+-moz-transform: rotate(180deg);
+transform: rotate(180deg);
+}
+
+.select-selected:after {
+	font-family: 'themify';
+	position: absolute;
+	content: "\e64b";
+	font-size: 11px;
+	top: 10px;
+	right: 17px;
+	width: 0;
+	height: 0;
+}
+.form-control {
+    font-family: 'HelveticaNeue';
+    display: block;
+    width: 100%;
+    font-size: 16px;
+    font-weight: 100;
+    color: #929292;
+    background-color: #f6f8f8;
+    background-clip: padding-box;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid #d5d5d5;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    padding: 7px 0px;
+}
+

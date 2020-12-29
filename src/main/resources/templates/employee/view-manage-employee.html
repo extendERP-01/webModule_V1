@@ -20,6 +20,57 @@
     <script src="js/bootstrap.js"></script> -->
 
 <script>
+
+
+
+
+
+
+
+//Function for adding more Table row
+function addMore(){
+	var lengthOfTableRow = $("#tbodyDataFile").children('tr').length;
+	var cloneHtml = $("#myTable tbody tr:first").clone();
+	$("#myTable tbody tr:last").find('td:last').html('');
+	$("#myTable tbody").append($("#myTable tbody tr:first").clone());
+	$("#myTable tbody tr td:last").html("");
+	var addMore='<button type="button" class="btn btn-primary tr_clone_add" name="add" onclick="checkEmpty();"><span class="ti-plus"></span></button>&nbsp;'
+	var removeMore = '<button type="button" class="btn btn-warning rmv" name="Remove"><span class="ti-minus"></span></button>';
+	
+	
+	$("#myTable tbody tr:last").find('td:last').append(addMore);
+	$("#myTable tbody tr:last").find('td:last').append(removeMore);
+	
+	var editTr = 0;
+	
+	if(lengthOfTableRow>editTr){
+		$("#myTable tbody tr").eq(lengthOfTableRow-1).find('td:last').append(removeMore);
+		
+	}
+			
+	$("#myTable tbody tr:last").find(".document").val("");
+	$("#myTable tbody tr:last").find(".documentTypeCls").val("");
+	$("#myTable tbody tr:last").find(".uploadedBillCls").empty();
+	$("#myTable tbody tr:last").find(".uploadHidCls").empty();
+			
+	$("#myTable > tbody > tr").each(function(i){
+		var textInput = $(this).find('input');
+		var ankerInput = $(this).find('a');
+		var spanInput = $(this).find('span');
+		var divInput = $(this).find('div');
+		
+		var selectInput = $(this).find('select');
+		selectInput.eq(0).attr('id', "documentType_" + i);
+		textInput.eq(0).attr('id', "ques_" + i);
+		textInput.eq(1).attr('id', "quesId_" + i);
+		textInput.eq(2).attr('id', "uploadDoc_" + i);
+		textInput.eq(3).attr('id', "uploadHidden_" + i);
+		divInput.eq(0).attr('id', "zoom_" + i);
+		divInput.eq(2).attr('id', "uploadedBillDiv_" + i);
+	})
+	
+}
+
 	function autocomplete(inp, arr) {
 		/*the autocomplete function takes two arguments,
 		the text field element and an array of possible autocompleted values:*/
@@ -221,14 +272,7 @@
 			}
 		});
 	}
-	
-	
-	
-	
-	
-	
-	
-	
+
 	/* //employee doc
 
 	var expanded = false;
@@ -293,16 +337,16 @@
 			enctype : "multipart/form-data",
 			contentType : false,
 			/* data        : fileData, */
-			/* processData : false,
-			cache : false,
-			success : function(response) {
-				console.log("ABC")
-			},
-			error : function(e) {
+	/* processData : false,
+	cache : false,
+	success : function(response) {
+		console.log("ABC")
+	},
+	error : function(e) {
 
-			}
-		});
-	} */ 
+	}
+	});
+	} */
 </script>
 
 
@@ -320,8 +364,48 @@
 			$("#newId").show();
 			$(".btn-hs").show();
 			$("#profile").hide();
+		
 		});
+		
+		
+		
+		
+		
+		
 	});
+	
+</script>
+<script type="text/javascript">
+
+$(document).ready(function() {
+	
+	$('.collapse').on('show.bs.collapse', function() {
+		$(this).siblings('.panel-heading').addClass('active');
+	});
+
+	$('.collapse').on('hide.bs.collapse', function() {
+		$(this).siblings('.panel-heading').removeClass('active');
+	});
+});
+
+
+
+$('.tbll').on('click', '.rmv', function () {
+	 
+	$(this).closest('tr').remove();
+	$("#myTable tbody tr:last").find(
+		'td:last').html('');
+	var add = '<button type="button" class="btn btn-primary tr_clone_add" name="add" onclick="addMore();"><span class="ti-plus"></span></button> '
+	var remove = '<button type="button" class="btn btn-warning rmv" name="Remove"><span class="ti-minus"></span></button>';
+
+	if ($("#tbodyDataFile").children('tr').length > 1) {
+		$("#myTable tbody tr:last").find('td:last').append(add);
+		$("#myTable tbody tr:last").find('td:last').append(remove);
+	} else {
+		$("#myTable tbody tr:last").find('td:last').append(add);
+	}
+});
+
 </script>
 
 
@@ -545,7 +629,7 @@
 											</div>
 										</div>
 										<div class="col-md-2 btn-hs" align="right">
-											<button class="btn4"   onclick="profileSelect()">Upload</button>
+											<button class="btn4" onclick="profileSelect()">Upload</button>
 											<button class="btn4">Download</button>
 
 										</div>
@@ -644,10 +728,10 @@
 												</div>
 											</div>
 										</div>
-										
-									
+
+
 									</div>
-									<div class="col-md-12 mt-60">
+									<!-- <div class="col-md-12 mt-60">
 										<div class="card-header">
 											<a href="#" data-toggle="collapse" data-target="#demo21"
 												style="color: #333; text-decoration: none;"
@@ -657,54 +741,70 @@
 												aria-expanded="true" class=""><i
 												class="fa fa-angle-down rotate-icon"></i></a>
 										</div>
-										<!-- Card body -->
-										<div id="demo21" class="collapse">
-											<div class="card-body">
-												<div class="col-md-12 col-lg-12">
-													<div id="tracking-pre"></div>
-													<div id="tracking">
-														<div class="tracking-item">
-															<div class="tracking-icon status-intransit">
-																<!-- <i class="fas fa-circle"></i> -->
-															</div>
-															<div class="tracking-content">
-																<span>9-Oct-17: Onboarded-Marketing Analyst
-																	(Marketing department)</span>
-															</div>
-														</div>
-														<div class="tracking-item">
-															<div class="tracking-icon status-intransit">
-																<!-- <i class="fas fa-circle"></i> -->
-															</div>
-															<div class="tracking-content">
-																<span>1-Jan-18: Transitioned from Marketing
-																	Analyst (Marketing department) to AP Analyst (Finance
-																	Department)</span>
-															</div>
-														</div>
-														<div class="tracking-item">
-															<div class="tracking-icon status-intransit">
-																<!-- <i class="fas fa-circle"></i> -->
-															</div>
-															<div class="tracking-content">
-																<span>20-Dec-18: Promoted from AP Analyst
-																	(Finance Department) to AP Lead (Finance department)</span>
-															</div>
-														</div>
-														<div class="tracking-item">
-															<div class="tracking-icon status-intransit">
-																<!-- <i class="fas fa-circle"></i> -->
-															</div>
-															<div class="tracking-content">
-																<span>14-Feb-20: Promoted from AP Lead (Finance
-																	Department) to AP Manager (Finance department)</span>
+										
+										<div id="demo21" class="collapse"> -->
+
+									<div class="wrapper center-block">
+										<div class="panel-group" id="accordion" role="tablist"
+											aria-multiselectable="true">
+											<div class="panel panel-default">
+												<div class="panel-heading" role="tab" id="headingOne">
+													<h4 class="panel-title">
+														<a role="button" data-toggle="collapse"
+															data-parent="#accordion" href="#collapseOne"
+															aria-expanded="true" aria-controls="collapseOne">
+															INTERNAL JOURNEY </a>
+													</h4>
+												</div>
+												<div id="collapseOne" class="panel-collapse collapse"
+													role="tabpanel" aria-labelledby="headingOne">
+													<div class="card-body">
+														<div class="col-md-12 col-lg-12">
+															<div id="tracking-pre"></div>
+															<div id="tracking">
+																<div class="tracking-item">
+																	<div class="tracking-icon status-intransit">
+																		<!-- <i class="fas fa-circle"></i> -->
+																	</div>
+																	<div class="tracking-content">
+																		<span>9-Oct-17: Onboarded-Marketing Analyst
+																			(Marketing department)</span>
+																	</div>
+																</div>
+																<div class="tracking-item">
+																	<div class="tracking-icon status-intransit">
+																		<!-- <i class="fas fa-circle"></i> -->
+																	</div>
+																	<div class="tracking-content">
+																		<span>1-Jan-18: Transitioned from Marketing
+																			Analyst (Marketing department) to AP Analyst (Finance
+																			Department)</span>
+																	</div>
+																</div>
+																<div class="tracking-item">
+																	<div class="tracking-icon status-intransit">
+																		<!-- <i class="fas fa-circle"></i> -->
+																	</div>
+																	<div class="tracking-content">
+																		<span>20-Dec-18: Promoted from AP Analyst
+																			(Finance Department) to AP Lead (Finance department)</span>
+																	</div>
+																</div>
+																<div class="tracking-item">
+																	<div class="tracking-icon status-intransit">
+																		<!-- <i class="fas fa-circle"></i> -->
+																	</div>
+																	<div class="tracking-content">
+																		<span>14-Feb-20: Promoted from AP Lead (Finance
+																			Department) to AP Manager (Finance department)</span>
+																	</div>
+																</div>
 															</div>
 														</div>
 													</div>
 												</div>
 											</div>
-										</div>
-										<!-- <div class="card-header" role="tab" id="collapseOne1">
+											<!-- <div class="card-header" role="tab" id="collapseOne1">
 											<a data-toggle="collapse" data-parent="#accordionEx"
 												href="#collapseOne" aria-expanded="true"
 												aria-controls="collapseOne1"> Personal Information <i
@@ -713,7 +813,7 @@
 											</a>
 										</div>
  -->
-										<div class="card-header">
+											<!-- <div class="card-header">
 											<a href="#" data-toggle="collapse" data-target="#demo22"
 												style="color: #333; text-decoration: none;"
 												aria-expanded="true" class="">PERSONAL INFORMATION</a> <a
@@ -722,138 +822,250 @@
 												aria-expanded="true" class=""><i
 												class="fa fa-angle-down rotate-icon"></i></a>
 										</div>
-										<div id="demo22" class="collapse">
-											<div class="row form-box mb-10">
-
-
-												<div class="col-md-4">
-													<div class="form-group">
-														<label>First Name</label> <input type="text"
-															name="First Name" value="" placeholder="First Name"
-															class="form-control" id="firstnameid">
-													</div>
+										<div id="demo22" class="collapse"> -->
+											<div class="panel panel-default">
+												<div class="panel-heading" role="tab" id="headingtwo">
+													<h4 class="panel-title">
+														<a role="button" data-toggle="collapse"
+															data-parent="#accordion" href="#collapsetwo"
+															aria-expanded="true" aria-controls="collapsetwo">
+															PERSONAL INFORMATION </a>
+													</h4>
 												</div>
+												<div id="collapsetwo" class="panel-collapse collapse "
+													role="tabpanel" aria-labelledby="headingtwo">
+													<div class="row form-box mb-10">
 
 
-
-
-												<div class="col-md-4">
-													<div class="form-group">
-														<label>Last Name</label> <input type="text"
-															name="Last Name" value="" placeholder="Last Name"
-															class="form-control" id="lastnameid">
-													</div>
-												</div>
-												<div class="col-md-4">
-													<div class="form-group">
-														<label>DOB</label> <input type="text" name="Date of birth"
-															value="" placeholder="Date of birth" class="form-control"
-															id="dobid">
-													</div>
-												</div>
-												<div class="col-md-4">
-													<div class="form-group">
-														<label>Father Name</label> <input type="text"
-															name="Father Name" value="" placeholder="Father Name"
-															class="form-control" id="fatherid">
-													</div>
-												</div>
-												<div class="col-md-4">
-													<div class="form-group">
-														<label>Mother Name</label> <input type="text"
-															name="Mother Name" value="" placeholder="Mother Name"
-															class="form-control" id="motherid">
-													</div>
-												</div>
-
-
-
-
-												<div class="col-md-4">
-													<div class="form-group">
-														<label>Gender</label>
-														<div class="selectbox">
-															<select class="form-control" id="genderid">
-																<option>Select</option>
-																<option th:each="c,iter:${genderTypeList}"
-																	th:value="${c.key}" th:text="${c.name}"></option>
-															</select>
+														<div class="col-md-4">
+															<div class="form-group">
+																<label>First Name</label> <input type="text"
+																	name="First Name" value="" placeholder="First Name"
+																	class="form-control" id="firstnameid">
+															</div>
 														</div>
-													</div>
-												</div>
 
 
 
 
-
-
-
-
-												<div class="col-md-4">
-													<div class="form-group">
-														<label>Nationality</label>
-														<div class="selectbox">
-															<select class="form-control" id="nationalityid">
-																<option>Select</option>
-																<option th:each="c,iter:${nationalityList}"
-																	th:value="${c.key}" th:text="${c.name}"></option>
-															</select>
+														<div class="col-md-4">
+															<div class="form-group">
+																<label>Last Name</label> <input type="text"
+																	name="Last Name" value="" placeholder="Last Name"
+																	class="form-control" id="lastnameid">
+															</div>
 														</div>
-													</div>
-												</div>
+														
+													
 
-												<div class="col-md-4">
-													<div class="form-group">
-														<label>Blood Group</label>
-														<div class="selectbox">
-															<select class="form-control" id="bloodgroupid">
-																<option>Select</option>
-																<option th:each="c,iter:${bloodgroupList}"
-																	th:value="${c.key}" th:text="${c.name}"></option>
-															</select>
+
+
+														<div class="col-md-4">
+															<div class="form-group">
+																<label>Gender</label>
+																<div class="selectbox">
+																	<select class="form-control" id="genderid">
+																		<option>Select</option>
+																		<option th:each="c,iter:${genderTypeList}"
+																			th:value="${c.key}" th:text="${c.name}"></option>
+																	</select>
+																</div>
+															</div>
 														</div>
-													</div>
-												</div>
-
-
-												<div class="col-md-4">
-													<div class="form-group">
-														<label>Marital Status</label>
-														<div class="selectbox">
-															<select class="form-control" id="maritalstatusid">
-																<option>Select</option>
-																<option th:each="c,iter:${maritalstatusList}"
-																	th:value="${c.key}" th:text="${c.name}"></option>
-															</select>
+														<div class="col-md-4">
+															<div class="form-group">
+																<label>DOB</label> <input type="text"
+																	name="Date of birth" value=""
+																	placeholder="Date of birth" class="form-control"
+																	id="dobid">
+															</div>
 														</div>
-													</div>
-												</div>
-												<div class="col-md-4">
-													<div class="form-group">
-														<label>Address</label> <input type="text" name="Address"
-															value="" placeholder="Address" class="form-control"
-															id="addressid">
-													</div>
-												</div>
-
-												<div class="col-md-4">
-													<div class="form-group">
-														<label>Country</label>
-														<div class="selectbox">
-															<select class="form-control" id="countryid">
-																<option>Select</option>
-																<option th:each="c,iter:${counntryList}"
-																	th:value="${c.key}" th:text="${c.name}"></option>
-															</select>
+														<div class="col-md-4">
+															<div class="form-group">
+																<label>Blood Group</label>
+																<div class="selectbox">
+																	<select class="form-control" id="bloodgroupid">
+																		<option>Select</option>
+																		<option th:each="c,iter:${bloodgroupList}"
+																			th:value="${c.key}" th:text="${c.name}"></option>
+																	</select>
+																</div>
+															</div>
 														</div>
+															<div class="col-md-4">
+															<div class="form-group">
+																<label>Marital Status</label>
+																<div class="selectbox">
+																	<select class="form-control" id="maritalstatusid">
+																		<option>Select</option>
+																		<option th:each="c,iter:${maritalstatusList}"
+																			th:value="${c.key}" th:text="${c.name}"></option>
+																	</select>
+																</div>
+															</div>
+														</div>
+															<div class="col-md-4">
+															<div class="form-group">
+																<label>Nationality</label>
+																<div class="selectbox">
+																	<select class="form-control" id="nationalityid">
+																		<option>Select</option>
+																		<option th:each="c,iter:${nationalityList}"
+																			th:value="${c.key}" th:text="${c.name}"></option>
+																	</select>
+																</div>
+															</div>
+														</div>
+
+															<div class="col-md-4">
+															<div class="form-group">
+																<label>Father Name</label> <input type="text"
+																	name="Father Name" value="" placeholder="Father Name"
+																	class="form-control" id="fatherid">
+															</div>
+														</div>
+                                                         
+                                                         
+                                                         
+														<div class="col-md-4">
+															<div class="form-group">
+																<label>Mother Name</label> <input type="text"
+																	name="Mother Name" value="" placeholder="Mother Name"
+																	class="form-control" id="motherid">
+															</div>
+														</div>
+                                                         
+
+
+
+
+
+													
+
+														
+
+
+													
+														
+
+													
+
+
+
+													
+
+
+												
+
+														
+
+														<div class="col-md-4">
+															<div class="form-group">
+																<label>Mobile No</label> <input type="text"
+																	name="mobileno" value="" placeholder="mobileno"
+																	class="form-control" id="mobilenoid">
+															</div>
+														</div>
+
+														<div class="col-md-4">
+															<div class="form-group">
+																<label>Personal Mail</label> <input type="text"
+																	name="personalmail" value="" placeholder="personalmail"
+																	class="form-control" id="personalmailid">
+															</div>
+														</div>
+
+
+
+														<div class="col-md-4">
+															<div class="form-group">
+																<label>Work Mail</label> <input type="text"
+																	name="workmail" value="" placeholder="workmail"
+																	class="form-control" id="workmailid">
+															</div>
+														</div>
+
+
+
+
+
+
 													</div>
 												</div>
+											</div>
+											
+											
+											<div class="panel panel-default">
+												<div class="panel-heading" role="tab" id="headingtwothree">
+													<h4 class="panel-title">
+														<a role="button" data-toggle="collapse"
+															data-parent="#accordion" href="#collapseaddress"
+															aria-expanded="true" aria-controls="collapsetwothree">
+															ADDRESS </a>
+													</h4>
+												</div>
+												<div id="collapseaddress" class="panel-collapse collapse "
+													role="tabpanel" aria-labelledby="headingtwothree">
+													
+													<div class="row">
+											<div class="col-md-10">
+											<div class="font-design">
+												Present <!-- <span>(10)</span> -->
+											</div>
+										</div>
+										<div class="col-md-3" align="right">
+											<button class="btn4" >New</button>
+											<button class="btn4" >Delete</button>
+											<button class="btn4">Download</button>
 
+										</div>
+										</div>
 
+								
 
-												<div class="col-md-4">
-													<div class="form-group">
-														<label>State</label>
+									<table class="newtbl">
+										<thead>
+											<tr>
+												
+												<th width="250">Address</th>
+												<th width="180">City</th>
+												<th width="180"> State</th>
+												<th width="180">Zip Code</th>
+												<th width="180">Country</th>
+												<th width="180">Status</th>
+												
+											</tr>
+										</thead>
+										<tbody>
+										<tr>
+										    <td>
+										    
+						                                 					    
+															<div class="form-group">
+																 <input type="text" name="Address"
+																	value="" placeholder="Address" class="form-control"
+																	id="addressid">
+															</div>
+															
+													</td>
+													
+													<td>
+													
+														<div class="form-group">
+																
+																<div class="selectbox">
+																	<select class="form-control" id="cityid">
+																		<option>Select</option>
+																		<option th:each="c,iter:${cityList}"
+																			th:value="${c.key}" th:text="${c.name}"></option>
+																	</select>
+																</div>
+															</div>
+															</td>
+													<td>
+													
+														<div class="form-group">
+														
 														<div class="selectbox">
 															<select class="form-control" id="stateid">
 																<option>Select</option>
@@ -862,145 +1074,233 @@
 															</select>
 														</div>
 													</div>
-												</div>
-
-
-												<div class="col-md-4">
+											
+															</td>
+															
+															
+															<td>
+													
 													<div class="form-group">
-														<label>City</label>
-														<div class="selectbox">
-															<select class="form-control" id="cityid">
-																<option>Select</option>
-																<option th:each="c,iter:${cityList}" th:value="${c.key}"
-																	th:text="${c.name}"></option>
-															</select>
-														</div>
-													</div>
-												</div>
-
-												<div class="col-md-4">
-													<div class="form-group">
-														<label>Zip Code</label> <input type="text" name="zipcode"
-															value="" placeholder="zipcode" class="form-control"
-															id="zipcodeid">
-													</div>
-												</div>
-
-												<div class="col-md-4">
-													<div class="form-group">
-														<label>Mobile No</label> <input type="text"
-															name="mobileno" value="" placeholder="mobileno"
-															class="form-control" id="mobilenoid">
-													</div>
-												</div>
-
-												<div class="col-md-4">
-													<div class="form-group">
-														<label>Personal Mail</label> <input type="text"
-															name="personalmail" value="" placeholder="personalmail"
-															class="form-control" id="personalmailid">
-													</div>
-												</div>
-
-
-
-												<div class="col-md-4">
-													<div class="form-group">
-														<label>Work Mail</label> <input type="text"
-															name="workmail" value="" placeholder="workmail"
-															class="form-control" id="workmailid">
-													</div>
-												</div>
-
-
-
-
-
-
+															<input type="text"
+																	name="zipcode" value="" placeholder="zipcode"
+																	class="form-control" id="zipcodeid">
+															</div>
+															</td>
+															<td>
+													
+														<div class="form-group">
+																
+																<div class="selectbox">
+																	<select class="form-control" id="countryid">
+																		<option>Select</option>
+																		<option th:each="c,iter:${counntryList}"
+																			th:value="${c.key}" th:text="${c.name}"></option>
+																	</select>
+																</div>
+															</div>
+															</td>
+															
+															<td><div class="form-group">
+																 <input type="text"
+																	name="status" value="" placeholder="Status"
+																	class="form-control" id="statusid">
+															</div>
+															</td>
+													
+													
+										</tr>
+										</tbody>
+										</table>
+										
+										
+										<div class="row">
+											<div class="col-md-10">
+											<div class="font-design">
+												Premanent <!-- <span>(10)</span> -->
 											</div>
 										</div>
-										<div class="card-header">
-											<a href="#" data-toggle="collapse" data-target="#demo23"
-												style="color: #333; text-decoration: none;"
-												aria-expanded="true" class="">IDENTITY PROOF</a> <a
-												data-toggle="collapse" data-target="#demo23"
-												style="float: right; color: #333; text-decoration: none;"
-												aria-expanded="true" class=""><i
-												class="fa fa-angle-down rotate-icon"></i></a>
+										
 										</div>
-										<div id="demo23" class="collapse">
-											<div class="row form-box mb-10">
-
-
-
-												<div class="col-md-4">
-													<div class="form-group">
-														<label> United State Passport Card</label> <input
-															type="text" name="unitedstatepassportcard" value=""
-															placeholder="unitedstatepassportcard"
-															class="form-control" id="passportid">
-													</div>
-												</div>
-
-
-												<div class="col-md-4">
-													<div class="form-group">
-														<label>Driving Licence</label> <input type="text"
-															name="drivinglicence" value=""
-															placeholder="Driving Licence"
-															class="form-control" id="drivinglicenceid">
-													</div>
-												</div>
-
-
-												<div class="col-md-4">
-													<div class="form-group">
-														<label>Social Security Number</label> <input type="text"
-															name="socialsecuritynumber" value=""
-															placeholder="socialsecuritynumber"
-															class="form-control" id="socialsecuritynumberid">
-													</div>
-												</div>
-
-												<div class="col-md-4">
-													<div class="form-group">
-														<label>Document Type</label>
+										
+									<table class="newtbl">
+										<thead>
+											<tr>
+												
+											<th width="250">Address</th>
+												<th width="180">City</th>
+												<th width="180"> State</th>
+												<th width="180">Zip Code</th>
+												<th width="180">Country</th>
+												<th width="180">Status</th>
+												
+											</tr>
+										</thead>
+										<tbody>
+										<tr>
+										    <td>
+										    
+						                              			    
+															<div class="form-group">
+																 <input type="text" name="Address"
+																	value="" placeholder="Address" class="form-control"
+																	id="addressid">
+															</div>
+															</div>
+													</td>
+													
+													<td>
+													
+														<div class="form-group">
+															
+																<div class="selectbox">
+																	<select class="form-control" id="cityid">
+																		<option>Select</option>
+																		<option th:each="c,iter:${cityList}"
+																			th:value="${c.key}" th:text="${c.name}"></option>
+																	</select>
+																</div>
+															</div>
+															</td>
+													<td>
+													
+														<div class="form-group">
+												
 														<div class="selectbox">
-															<select class="form-control" id="documenttypeid">
+															<select class="form-control" id="stateid">
 																<option>Select</option>
-																<option th:each="c,iter:${documenttypeList}"
+																<option th:each="c,iter:${stateList}"
 																	th:value="${c.key}" th:text="${c.name}"></option>
 															</select>
 														</div>
 													</div>
+											
+															</td>
+															
+															
+															<td>
+													
+													<div class="form-group">
+																 <input type="text"
+																	name="zipcode" value="" placeholder="zipcode"
+																	class="form-control" id="zipcodeid">
+															</div>
+															</td>
+															<td>
+													
+														<div class="form-group">
+																
+																<div class="selectbox">
+																	<select class="form-control" id="countryid">
+																		<option>Select</option>
+																		<option th:each="c,iter:${counntryList}"
+																			th:value="${c.key}" th:text="${c.name}"></option>
+																	</select>
+																</div>
+															</div>
+															</td>
+															
+															<td><div class="form-group">
+															 <input type="text"
+																	name="status" value="" placeholder="Status"
+																	class="form-control" id="statusid">
+															</div>
+															</td>
+													
+													
+										</tr>
+										</tbody>
+										</table>
 												</div>
+												</div>
+											</div>
+											
+											
+											
+											
+											<div class="panel panel-default">
+												<div class="panel-heading" role="tab" id="headingthree">
+													<h4 class="panel-title">
+														<a role="button" data-toggle="collapse"
+															data-parent="#accordion" href="#collapsethree"
+															aria-expanded="true" aria-controls="collapsethree">
+															IDENTITY PROOF </a>
+													</h4>
+												</div>
+												<div id="collapsethree" class="panel-collapse collapse "
+													role="tabpanel" aria-labelledby="headingthree">
+													<div class="row form-box mb-10">
 
 
-												<div class="col-md-4">
-											<input type="hidden" id="documentid">
-											<div class="hvrbox">
-												<img src="../assets/images/noimage.jpg" id="imgLoc"
-													alt="Location" class="hvrbox-layer_bottom img-fluid"
-													style="height: 203px; width: 241px;">
-												<!-- <img src="../assets/images/noimage.jpg" alt="Location"
+
+														<div class="col-md-4">
+															<div class="form-group">
+																<label> United State Passport Card</label> <input
+																	type="text" name="unitedstatepassportcard" value=""
+																	placeholder="unitedstatepassportcard"
+																	class="form-control" id="passportid">
+															</div>
+														</div>
+
+
+														<div class="col-md-4">
+															<div class="form-group">
+																<label>Driving Licence</label> <input type="text"
+																	name="drivinglicence" value=""
+																	placeholder="Driving Licence" class="form-control"
+																	id="drivinglicenceid">
+															</div>
+														</div>
+
+
+														<div class="col-md-4">
+															<div class="form-group">
+																<label>Social Security Number</label> <input type="text"
+																	name="socialsecuritynumber" value=""
+																	placeholder="socialsecuritynumber" class="form-control"
+																	id="socialsecuritynumberid">
+															</div>
+														</div>
+
+														<div class="col-md-4">
+															<div class="form-group">
+																<label>Document Type</label>
+																<div class="selectbox">
+																	<select class="form-control" id="documenttypeid">
+																		<option>Select</option>
+																		<option th:each="c,iter:${documenttypeList}"
+																			th:value="${c.key}" th:text="${c.name}"></option>
+																	</select>
+																</div>
+															</div>
+														</div>
+
+
+														<div class="col-md-4">
+															<input type="hidden" id="documentid">
+															<div class="hvrbox">
+																<img src="../assets/images/noimage.jpg" id="imgLoc"
+																	alt="Location" class="hvrbox-layer_bottom img-fluid"
+																	style="height: 203px; width: 241px;">
+																<!-- <img src="../assets/images/noimage.jpg" alt="Location"
 										class="hvrbox-layer_bottom img-fluid"> -->
-												<div class="hvrbox-layer_top">
-													<div class="hvrbox-text">
-														<!-- <span><i class="fa fa-pencil-square-o"></i></span> -->
-														<input type="file" id="docUpload" hidden
-															onchange="saveFile();" /> <span><label
-															for="docUpload"><i class="ti-files"
-																style="cursor: pointer;"></i> <!-- <i class="fa fa-pencil-square-o"></i> --></label></span>
-														<span><i class="fa fa-trash red"
-															onclick="deleteFile();"></i></span>
+																<div class="hvrbox-layer_top">
+																	<div class="hvrbox-text">
+																		<!-- <span><i class="fa fa-pencil-square-o"></i></span> -->
+																		<input type="file" id="docUpload" hidden
+																			onchange="saveFile();" /> <span><label
+																			for="docUpload"><i class="ti-files"
+																				style="cursor: pointer;"></i> <!-- <i class="fa fa-pencil-square-o"></i> --></label></span>
+																		<span><i class="fa fa-trash red"
+																			onclick="deleteFile();"></i></span>
+																	</div>
+																</div>
+															</div>
+														</div>
+
 													</div>
 												</div>
 											</div>
-										</div>
-
-											</div>
-										</div>
-										<div class="card-header">
+											<!-- <div class="card-header">
 											<a href="#" data-toggle="collapse" data-target="#demo24"
 												style="color: #333; text-decoration: none;"
 												aria-expanded="true" class="">WORK DETAILS</a> <a
@@ -1009,121 +1309,133 @@
 												aria-expanded="true" class=""><i
 												class="fa fa-angle-down rotate-icon"></i></a>
 										</div>
-										<div id="demo24" class="collapse">
-											<div class="row form-box mb-10">
-
-
-
-
-												<div class="col-md-4">
-													<div class="form-group">
-														<label>Job Title</label> <input type="text"
-															name="jobtitle" value="" placeholder="jobtitle"
-															class="form-control" id="jobtitleid">
-													</div>
+										<div id="demo24" class="collapse"> -->
+											<div class="panel panel-default">
+												<div class="panel-heading" role="tab" id="headingfour">
+													<h4 class="panel-title">
+														<a role="button" data-toggle="collapse"
+															data-parent="#accordion" href="#collapsefour"
+															aria-expanded="true" aria-controls="collapsefour">
+															WORK DETAILS </a>
+													</h4>
 												</div>
+												<div id="collapsefour" class="panel-collapse collapse "
+													role="tabpanel" aria-labelledby="headingfour">
+													<div class="row form-box mb-10">
 
 
-												<div class="col-md-4">
-													<div class="form-group">
-														<label>Job Type</label>
-														<div class="selectbox">
-															<select class="form-control" id="jobtypeid">
-																<option>Select</option>
-																<option th:each="c,iter:${jobtypeList}"
-																	th:value="${c.key}" th:text="${c.name}"></option>
-															</select>
+
+
+														<div class="col-md-4">
+															<div class="form-group">
+																<label>Job Title</label> <input type="text"
+																	name="jobtitle" value="" placeholder="jobtitle"
+																	class="form-control" id="jobtitleid">
+															</div>
 														</div>
-													</div>
-												</div>
 
 
-												<div class="col-md-4">
-													<div class="form-group">
-														<label>Department</label>
-														<div class="selectbox">
-															<select class="form-control" id="departmentid">
-																<option>Select</option>
-																<option th:each="c,iter:${DepartmentList}"
-																	th:value="${c.key}" th:text="${c.name}"></option>
-															</select>
+														<div class="col-md-4">
+															<div class="form-group">
+																<label>Job Type</label>
+																<div class="selectbox">
+																	<select class="form-control" id="jobtypeid">
+																		<option>Select</option>
+																		<option th:each="c,iter:${jobtypeList}"
+																			th:value="${c.key}" th:text="${c.name}"></option>
+																	</select>
+																</div>
+															</div>
 														</div>
-													</div>
-												</div>
 
-												<div class="col-md-4">
-													<div class="form-group">
-														<label>Employment Status</label>
-														<div class="selectbox">
-															<select class="form-control" id="employmentstatusid">
-																<option>Select</option>
-																<option th:each="c,iter:${employmentstatusList}"
-																	th:value="${c.key}" th:text="${c.name}"></option>
-															</select>
+
+														<div class="col-md-4">
+															<div class="form-group">
+																<label>Department</label>
+																<div class="selectbox">
+																	<select class="form-control" id="departmentid">
+																		<option>Select</option>
+																		<option th:each="c,iter:${DepartmentList}"
+																			th:value="${c.key}" th:text="${c.name}"></option>
+																	</select>
+																</div>
+															</div>
 														</div>
-													</div>
-												</div>
 
-												<div class="col-md-4">
-													<div class="form-group">
-														<label>Degination</label>
-														<div class="selectbox">
-															<select class="form-control" id="deginationid">
-																<option>Select</option>
-																<option th:each="c,iter:${DeginationList}"
-																	th:value="${c.key}" th:text="${c.name}"></option>
-															</select>
+														<div class="col-md-4">
+															<div class="form-group">
+																<label>Employment Status</label>
+																<div class="selectbox">
+																	<select class="form-control" id="employmentstatusid">
+																		<option>Select</option>
+																		<option th:each="c,iter:${employmentstatusList}"
+																			th:value="${c.key}" th:text="${c.name}"></option>
+																	</select>
+																</div>
+															</div>
 														</div>
-													</div>
-												</div>
-												<div class="col-md-4">
-													<div class="form-group">
-														<label>Manager</label>
-														<div class="selectbox">
-															<select class="form-control" id="managerid">
-																<option>Select</option>
-																<option th:each="c,iter:${ManagerList}"
-																	th:value="${c.key}" th:text="${c.name}"></option>
-															</select>
+
+														<div class="col-md-4">
+															<div class="form-group">
+																<label>Degination</label>
+																<div class="selectbox">
+																	<select class="form-control" id="deginationid">
+																		<option>Select</option>
+																		<option th:each="c,iter:${DeginationList}"
+																			th:value="${c.key}" th:text="${c.name}"></option>
+																	</select>
+																</div>
+															</div>
 														</div>
+														<div class="col-md-4">
+															<div class="form-group">
+																<label>Manager</label>
+																<div class="selectbox">
+																	<select class="form-control" id="managerid">
+																		<option>Select</option>
+																		<option th:each="c,iter:${ManagerList}"
+																			th:value="${c.key}" th:text="${c.name}"></option>
+																	</select>
+																</div>
+															</div>
+														</div>
+
+
+
+														<div class="col-md-4">
+															<div class="form-group">
+																<label>Confirmation Date</label> <input type="text"
+																	name="Confirmation Date" value=""
+																	placeholder="Confirmation Date" class="form-control"
+																	id="confirmationdateid">
+															</div>
+														</div>
+														<div class="col-md-4">
+															<div class="form-group">
+																<label>Monthly CTC</label> <input type="text"
+																	name="Monthly CTC" value="" placeholder="Monthly CTC"
+																	class="form-control" id="monthlyctcid">
+															</div>
+														</div>
+														<div class="col-md-4">
+															<div class="form-group">
+																<label> Annual CTC</label> <input type="text"
+																	name="Annual CTC" value="" placeholder="Annual CTC"
+																	class="form-control" id="annualctcid">
+															</div>
+														</div>
+
+
+
+
+
 													</div>
+
+
+
 												</div>
-
-
-
-												<div class="col-md-4">
-													<div class="form-group">
-														<label>Confirmation Date</label> <input type="text"
-															name="Confirmation Date" value=""
-															placeholder="Confirmation Date" class="form-control"
-															id="confirmationdateid">
-													</div>
-												</div>
-												<div class="col-md-4">
-													<div class="form-group">
-														<label>Monthly CTC</label> <input type="text"
-															name="Monthly CTC" value="" placeholder="Monthly CTC"
-															class="form-control" id="monthlyctcid">
-													</div>
-												</div>
-												<div class="col-md-4">
-													<div class="form-group">
-														<label> Annual CTC</label> <input type="text"
-															name="Annual CTC" value="" placeholder="Annual CTC"
-															class="form-control" id="annualctcid">
-													</div>
-												</div>
-
-
-
-
-
 											</div>
-
-
-
-										</div>
-										<div class="card-header">
+											<!-- <div class="card-header">
 											<a href="#" data-toggle="collapse" data-target="#demo25"
 												style="color: #333; text-decoration: none;"
 												aria-expanded="true" class="">BENEFIT STRUCTURE</a> <a
@@ -1133,27 +1445,39 @@
 												class="fa fa-angle-down rotate-icon"></i></a>
 										</div>
 
-										<div id="demo25" class="collapse">
-											<div class="col-md-12">
-												<div class="modal-inrheading">Benefits</div>
-												<div class="row">
-													<th:block th:each="c,iter:${benefitsList}">
-														<div class="col-md-3">
-															<div class="checkbox">
-																<input type="checkbox" value=""
-																	th:id="'benefits_'+${iter.index}" th:value='${c.key}'
-																	name="benefits"><span th:text="${c.name}"></span>
-															</div>
+										<div id="demo25" class="collapse"> -->
+											<div class="panel panel-default">
+												<div class="panel-heading" role="tab" id="headingfive">
+													<h4 class="panel-title">
+														<a role="button" data-toggle="collapse"
+															data-parent="#accordion" href="#collapsefive"
+															aria-expanded="true" aria-controls="collapsefive">
+															BENEFIT STRUCTURE </a>
+													</h4>
+												</div>
+												<div id="collapsefive" class="panel-collapse collapse"
+													role="tabpanel" aria-labelledby="headingfive">
+													<div class="col-md-12">
+														<div class="modal-inrheading">Benefits</div>
+														<div class="row">
+															<th:block th:each="c,iter:${benefitsList}">
+																<div class="col-md-3">
+																	<div class="checkbox">
+																		<input type="checkbox" value=""
+																			th:id="'benefits_'+${iter.index}" th:value='${c.key}'
+																			name="benefits"><span th:text="${c.name}"></span>
+																	</div>
+																</div>
+															</th:block>
 														</div>
-													</th:block>
+													</div>
+
+
 												</div>
 											</div>
 
 
-										</div>
-
-
-										<div class="card-header">
+											<!-- <div class="card-header">
 											<a href="#" data-toggle="collapse" data-target="#demo26"
 												style="color: #333; text-decoration: none;"
 												aria-expanded="true" class="">BANK DETAILS</a> <a
@@ -1162,50 +1486,62 @@
 												aria-expanded="true" class=""><i
 												class="fa fa-angle-down rotate-icon"></i></a>
 										</div>
-										<div id="demo26" class="collapse">
-											<div class="row form-box">
+										<div id="demo26" class="collapse"> -->
+											<div class="panel panel-default">
+												<div class="panel-heading" role="tab" id="headingsix">
+													<h4 class="panel-title">
+														<a role="button" data-toggle="collapse"
+															data-parent="#accordion" href="#collapsesix"
+															aria-expanded="true" aria-controls="collapsesix">
+															BANK DETAILS </a>
+													</h4>
+												</div>
+												<div id="collapsesix" class="panel-collapse collapse"
+													role="tabpanel" aria-labelledby="headingsix">
+													<div class="row form-box">
 
 
 
-												<div class="col-md-4">
-													<div class="form-group">
-														<label>Bank Name</label>
-														<div class="selectbox">
-															<select class="form-control" id="banknameid">
-																<option>Select</option>
-																<option th:each="c,iter:${BankNameList}"
-																	th:value="${c.key}" th:text="${c.name}"></option>
-															</select>
+														<div class="col-md-4">
+															<div class="form-group">
+																<label>Bank Name</label>
+																<div class="selectbox">
+																	<select class="form-control" id="banknameid">
+																		<option>Select</option>
+																		<option th:each="c,iter:${BankNameList}"
+																			th:value="${c.key}" th:text="${c.name}"></option>
+																	</select>
+																</div>
+															</div>
 														</div>
+
+
+														<div class="col-md-4">
+															<div class="form-group">
+																<label> Bank Account No</label> <input type="text"
+																	name="BankAccountNo" value=""
+																	placeholder="Bank Account No" class="form-control"
+																	id="bankaccountnoid">
+															</div>
+														</div>
+
+
+														<div class="col-md-4">
+															<div class="form-group">
+																<label> IFSC</label> <input type="text" name="IFSC"
+																	value="" placeholder="IFSC" class="form-control"
+																	id="ifscid">
+															</div>
+														</div>
+
+
+
+
 													</div>
+
 												</div>
-
-
-												<div class="col-md-4">
-													<div class="form-group">
-														<label> Bank Account No</label> <input type="text"
-															name="BankAccountNo" value=""
-															placeholder="Bank Account No" class="form-control"
-															id="bankaccountnoid">
-													</div>
-												</div>
-
-
-												<div class="col-md-4">
-													<div class="form-group">
-														<label> IFSC</label> <input type="text" name="IFSC"
-															value="" placeholder="IFSC" class="form-control"
-															id="ifscid">
-													</div>
-												</div>
-
-
-
-
 											</div>
-
-										</div>
-										<div class="card-header">
+											<!-- <div class="card-header">
 											<a href="#" data-toggle="collapse" data-target="#demo27"
 												style="color: #333; text-decoration: none;"
 												aria-expanded="true" class="">INSURANCE DETAILS</a> <a
@@ -1215,52 +1551,66 @@
 												class="fa fa-angle-down rotate-icon"></i></a>
 										</div>
 
-										<div id="demo27" class="collapse">
-											<div class="row form-box">
-												<div class="col-md-4">
-													<div class="form-group">
-														<label>Have Health Insurance</label>
-														<div class="selectbox">
-															<select class="form-control" id="healthinsuranceid">
-																<option>Select</option>
-																<option th:each="c,iter:${healthinsuranceList}"
-																	th:value="${c.key}" th:text="${c.name}"></option>
-															</select>
+										<div id="demo27" class="collapse"> -->
+											<div class="panel panel-default">
+												<div class="panel-heading" role="tab" id="headingseven">
+													<h4 class="panel-title">
+														<a role="button" data-toggle="collapse"
+															data-parent="#accordion" href="#collapseseven"
+															aria-expanded="true" aria-controls="collapseseven">
+															INSURANCE DETAILS </a>
+													</h4>
+												</div>
+												<div id="collapseseven" class="panel-collapse collapse"
+													role="tabpanel" aria-labelledby="headingseven">
+													<div class="row form-box">
+														<div class="col-md-4">
+															<div class="form-group">
+																<label>Have Health Insurance</label>
+																<div class="selectbox">
+																	<select class="form-control" id="healthinsuranceid">
+																		<option>Select</option>
+																		<option th:each="c,iter:${healthinsuranceList}"
+																			th:value="${c.key}" th:text="${c.name}"></option>
+																	</select>
+																</div>
+															</div>
 														</div>
-													</div>
-												</div>
-												<div class="col-md-4">
-													<div class="form-group">
-														<label> From Date</label> <input type="text"
-															name="From Date" value="" placeholder="From Date"
-															class="form-control" id="fromdateid">
-													</div>
-												</div>
+														<div class="col-md-4">
+															<div class="form-group">
+																<label> From Date</label> <input type="text"
+																	name="From Date" value="" placeholder="From Date"
+																	class="form-control" id="fromdateid">
+															</div>
+														</div>
 
 
-												<div class="col-md-4">
-													<div class="form-group">
-														<label> To Date</label> <input type="text" name="To Date"
-															value="" placeholder="To Date" class="form-control"
-															id="todateid">
-													</div>
-												</div>
+														<div class="col-md-4">
+															<div class="form-group">
+																<label> To Date</label> <input type="text"
+																	name="To Date" value="" placeholder="To Date"
+																	class="form-control" id="todateid">
+															</div>
+														</div>
 
+													</div>
+
+
+												</div>
 											</div>
-
-
-
 										</div>
 
 									</div>
 
 								</div>
+
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+	</div>
 	</div>
 </body>
 </html>
